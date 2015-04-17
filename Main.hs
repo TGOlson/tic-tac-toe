@@ -1,8 +1,27 @@
 import Board
+import Symbol
 
-play :: Board -> IO Board
-play board = do
-  print board
-  return board
+import Data.Array
 
-main = play emptyBoard
+
+play :: Symbol -> Board -> IO Board
+play s board
+  | isTerminal board = printBoard board
+  | otherwise = do
+      printBoard board
+      let nextSymbol = next s
+      play nextSymbol (getNextBoard nextSymbol board)
+
+
+printBoard :: Board -> IO Board
+printBoard b = do
+  print b
+  putStrLn ""
+  return b
+
+
+getNextBoard :: Symbol -> Board -> Board
+getNextBoard s board = makeMove (length (openMoves board) - 1) s board
+
+
+main = play X emptyBoard
