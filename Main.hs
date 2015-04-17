@@ -1,5 +1,7 @@
 import Board
 import Symbol
+import Move
+
 
 import Data.Array()
 
@@ -10,7 +12,8 @@ play s b
   | otherwise = do
       _ <- printBoard b
       let nextSymbol = next s
-      play nextSymbol (getNextBoard nextSymbol b)
+      nextMove <- getNextMove nextSymbol b
+      play nextSymbol (makeMove nextMove b)
 
 
 printBoard :: Board -> IO Board
@@ -20,8 +23,14 @@ printBoard b = do
   return b
 
 
-getNextBoard :: Symbol -> Board -> Board
-getNextBoard s b = makeMove (length (openMoves b) - 1) s b
+-- data Move = Move Int
+
+getNextMove :: Symbol -> Board -> IO Move
+getNextMove E _ = error "Cannot make empty move."
+getNextMove O b = return $ Move O (length (openMoves b) - 1)
+getNextMove X _ = do
+  coords <- getLine
+  return $ Move X (read coords)
 
 main :: IO Board
 main = play X emptyBoard

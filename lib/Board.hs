@@ -2,6 +2,7 @@ module Board where
 
 import Symbol
 import Utils
+import Move
 
 import Data.Array
 import Data.List
@@ -23,8 +24,8 @@ emptyBoard :: Board
 emptyBoard = board $ replicate 9 E
 
 
-makeMove :: Int -> Symbol -> Board -> Board
-makeMove n sym (Board a) = Board $ (//) a [(n, sym)]
+makeMove :: Move -> Board -> Board
+makeMove (Move s n) (Board a) = Board $ (//) a [(n, s)]
 
 openMoves :: Board -> [(Int, Symbol)]
 openMoves (Board a) = filter ((== E) . snd) $ assocs a
