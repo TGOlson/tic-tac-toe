@@ -15,9 +15,8 @@ instance Show Board where
 board :: [Symbol] -> Board
 board xs = Board (listArray (0, 8) xs)
 
-
 showBoard :: Board -> String
-showBoard (Board a) = concat . intersperse "\n" . map show . groupsOf 3 $ elems a
+showBoard (Board a) = intercalate "\n" . map show . groupsOf 3 $ elems a
 
 
 emptyBoard :: Board
