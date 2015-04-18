@@ -1,9 +1,22 @@
 module Cell where
 
-import Symbol
+import Marker
 
-type Cell = (Int, Symbol)
+
+type Cell = (Int, Marker)
+
+
+makeEmptyCell :: Int -> Cell
+makeEmptyCell i = (i, Marker Nothing)
+
+
+makeEmptyCells :: [Int] -> [Cell]
+makeEmptyCells = map makeEmptyCell
+
 
 isEmptyCell :: Cell -> Bool
-isEmptyCell (_, Empty) = True
-isEmptyCell _ = False
+isEmptyCell = isEmptyMarker . snd
+
+
+setMarker :: Marker -> Cell -> Cell
+setMarker marker (i, _) = (i, marker)

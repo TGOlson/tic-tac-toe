@@ -1,0 +1,34 @@
+module Board.Board where
+
+import Board.Display
+import Cell
+import Marker
+
+import Data.Array
+
+
+data Board = Board (Array Int Marker)
+
+
+instance Show Board where
+  show (Board a) = showBoard $ elems a
+
+
+makeBoard :: Int -> Board
+makeBoard i = Board (array (0, i - 1) (makeEmptyCells [0..8]))
+
+
+makeMove :: Cell -> Board -> Board
+makeMove cell (Board a) = Board $ (//) a [cell]
+
+
+getCells :: Board -> [Cell]
+getCells (Board a) = assocs a
+
+
+getOpenCells :: Board -> [Cell]
+getOpenCells = filter isEmptyCell . getCells
+
+
+isFull :: Board -> Bool
+isFull = null . getOpenCells

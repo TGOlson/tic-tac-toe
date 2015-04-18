@@ -1,4 +1,4 @@
-module Utils where
+module Utils.List where
 
 groupsOf :: Int -> [a] -> [[a]]
 groupsOf n xs

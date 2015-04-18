@@ -1,19 +1,21 @@
-import Board
+import Board.Board
+
 import Symbol
+import Marker
 import Cell
-import Random
+import Utils.Random
 
 import Data.Array()
 
 
 play :: Symbol -> Board -> IO Board
-play s b = do
-    _ <- printBoard b
-    if isTerminal b then return b
+play symbol board = do
+    _ <- printBoard board
+    if isFull board then return board
       else do
-        let nextSymbol = toggle s
-        nextMove <- getNextMove nextSymbol b
-        let nextBoard = makeMove nextMove b
+        let nextSymbol = next symbol
+        nextMove <- getNextMove nextSymbol board
+        let nextBoard = makeMove nextMove board
         play nextSymbol nextBoard
 
 
@@ -25,21 +27,20 @@ printBoard b = do
 
 getAIMove :: Symbol -> Board -> IO Cell
 getAIMove symbol b = do
-  cellNum <- randomElem (getOpenCellNumbers b)
-  return (cellNum, symbol)
+  cell <- randomElem (getOpenCells b)
+  return $ setMarker (Marker (Just symbol)) cell
 
 
 getPlayerMove :: Symbol -> Board -> IO Cell
 getPlayerMove symbol _ = do
   coords <- getLine
-  return (read coords, symbol)
+  return (read coords, Marker (Just symbol))
 
 
 getNextMove :: Symbol -> Board -> IO Cell
-getNextMove Empty = error "Cannot make empty move."
 -- getNextMove X = getPlayerMove X
 getNextMove X = getAIMove X
 getNextMove O = getAIMove O
 
 main :: IO Board
-main = play X makeEmptyBoard
+main = play X $ makeBoard 9

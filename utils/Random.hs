@@ -1,4 +1,4 @@
-module Random where
+module Utils.Random where
 
 import System.Random
 

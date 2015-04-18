@@ -1,13 +1,21 @@
 module Marker where
 
-data Symbol' = X | O deriving (Show, Eq)
+import Symbol
 
-data Marker = Marker (Maybe Symbol')
+import Data.Maybe
 
-getSymbol :: Marker -> Symbol'
+data Marker = Marker (Maybe Symbol)
+
+
+instance Show Marker where
+  show (Marker Nothing) = " "
+  show marker = show $ getSymbol marker
+
+
+getSymbol :: Marker -> Symbol
 getSymbol (Marker Nothing) = error "Cannot get symbol of empty marker"
 getSymbol (Marker (Just s)) = s
 
-isEmpty :: Marker -> Bool
-isEmpty (Marker Nothing) = True
-isEmpty _ = False
+
+isEmptyMarker :: Marker -> Bool
+isEmptyMarker (Marker a) = isNothing a

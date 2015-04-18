@@ -1,14 +1,9 @@
 module Symbol where
 
-data Symbol = Empty | X | O deriving (Eq)
 
-instance Show Symbol where
-  show Empty = " "
-  show X     = "X"
-  show O     = "O"
+data Symbol = X | O deriving (Show)
 
 
-toggle :: Symbol -> Symbol
-toggle Empty = Empty
-toggle X     = O
-toggle O     = X
+next :: Symbol -> Symbol
+next X = O
+next O = X
