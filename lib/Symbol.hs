@@ -1,8 +1,13 @@
 module Symbol where
 
-data Symbol = E | X | O deriving (Show, Eq, Enum)
+data Symbol = E | X | O deriving (Eq)
 
-next :: Symbol -> Symbol
-next E = E
-next X = O
-next O = X
+instance Show Symbol where
+  show E = " "
+  show X = "X"
+  show O = "O"
+
+toggle :: Symbol -> Symbol
+toggle E = E
+toggle X = O
+toggle O = X

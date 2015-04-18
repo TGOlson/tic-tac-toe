@@ -1,35 +1,41 @@
 module Board where
 
+import Cell
 import Symbol
 import Utils
-import Move
 
 import Data.Array
 import Data.List
 
 data Board = Board (Array Int Symbol)
 
+data Move = Move Cell
+
 instance Show Board where
-  show = showBoard
+  show (Board a) = showBoard $ elems a
 
 
-board :: [Symbol] -> Board
-board xs = Board (listArray (0, 8) xs)
-
-showBoard :: Board -> String
-showBoard (Board a) = intercalate "\n" . map show . groupsOf 3 $ elems a
+makeBoard :: [Symbol] -> Board
+makeBoard xs = Board (listArray (0, 8) xs)
 
 
-emptyBoard :: Board
-emptyBoard = board $ replicate 9 E
+makeEmptyBoard :: Board
+makeEmptyBoard = makeBoard $ replicate 9 E
 
+
+showBoard :: [Symbol] -> String
+showBoard = intercalate "\n-----\n" . map showRow . groupsOf 3
+
+showRow :: [Symbol] -> String
+showRow = intercalate "|" . map show
 
 makeMove :: Move -> Board -> Board
-makeMove (Move s n) (Board a) = Board $ (//) a [(n, s)]
+makeMove (Move cell) (Board a) = Board $ (//) a [cell]
 
-openMoves :: Board -> [(Int, Symbol)]
-openMoves (Board a) = filter ((== E) . snd) $ assocs a
+
+openMoves :: Board -> [Cell]
+openMoves (Board a) = filter isEmpty $ assocs a
 
 
 isTerminal :: Board -> Bool
-isTerminal = (==0) . length . openMoves
+isTerminal = null . openMoves

@@ -1,36 +1,41 @@
 import Board
 import Symbol
-import Move
-
 
 import Data.Array()
 
 
 play :: Symbol -> Board -> IO Board
-play s b
-  | isTerminal b = printBoard b
-  | otherwise = do
-      _ <- printBoard b
-      let nextSymbol = next s
-      nextMove <- getNextMove nextSymbol b
-      play nextSymbol (makeMove nextMove b)
+play s b = do
+    _ <- printBoard b
+    if isTerminal b then return b
+      else do
+        let nextSymbol = toggle s
+        nextMove <- getNextMove nextSymbol b
+        let nextBoard = makeMove nextMove b
+        play nextSymbol nextBoard
 
 
-printBoard :: Board -> IO Board
+printBoard :: Board -> IO ()
 printBoard b = do
   print b
   putStrLn ""
-  return b
 
 
--- data Move = Move Int
+getAIMove :: Symbol -> Board -> Move
+getAIMove symbol b = Move (length (openMoves b) - 1, symbol)
+
+
+getPlayerMove :: Symbol -> Board -> IO Move
+getPlayerMove symbol _ = do
+  coords <- getLine
+  return $ Move (read coords, symbol)
+
 
 getNextMove :: Symbol -> Board -> IO Move
-getNextMove E _ = error "Cannot make empty move."
-getNextMove O b = return $ Move O (length (openMoves b) - 1)
-getNextMove X _ = do
-  coords <- getLine
-  return $ Move X (read coords)
+getNextMove E = error "Cannot make empty move."
+-- getNextMove X = getPlayerMove X
+getNextMove X = return . getAIMove X
+getNextMove O = return . getAIMove O
 
 main :: IO Board
-main = play X emptyBoard
+main = play X makeEmptyBoard
