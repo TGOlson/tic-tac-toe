@@ -4,5 +4,6 @@ import Symbol
 
 type Cell = (Int, Symbol)
 
-isEmpty :: Cell -> Bool
-isEmpty = (== E) . snd
+isEmptyCell :: Cell -> Bool
+isEmptyCell (_, Empty) = True
+isEmptyCell _ = False

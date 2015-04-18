@@ -18,7 +18,7 @@ makeBoard xs = Board (listArray (0, 8) xs)
 
 
 makeEmptyBoard :: Board
-makeEmptyBoard = makeBoard $ replicate 9 E
+makeEmptyBoard = makeBoard $ replicate 9 Empty
 
 
 showBoard :: [Symbol] -> String
@@ -34,7 +34,7 @@ makeMove cell (Board a) = Board $ (//) a [cell]
 
 
 getOpenCells :: Board -> [Cell]
-getOpenCells (Board a) = filter isEmpty $ assocs a
+getOpenCells (Board a) = filter isEmptyCell $ assocs a
 
 
 getOpenCellNumbers :: Board -> [Int]

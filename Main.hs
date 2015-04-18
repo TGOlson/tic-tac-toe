@@ -36,7 +36,7 @@ getPlayerMove symbol _ = do
 
 
 getNextMove :: Symbol -> Board -> IO Cell
-getNextMove E = error "Cannot make empty move."
+getNextMove Empty = error "Cannot make empty move."
 -- getNextMove X = getPlayerMove X
 getNextMove X = getAIMove X
 getNextMove O = getAIMove O
