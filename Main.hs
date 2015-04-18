@@ -1,5 +1,6 @@
 import Board
 import Symbol
+import Random
 
 import Data.Array()
 
@@ -21,8 +22,10 @@ printBoard b = do
   putStrLn ""
 
 
-getAIMove :: Symbol -> Board -> Move
-getAIMove symbol b = Move (length (openMoves b) - 1, symbol)
+getAIMove :: Symbol -> Board -> IO Move
+getAIMove symbol b = do
+  cellNum <- randomElem (getOpenCellNumbers b)
+  return $ Move (cellNum, symbol)
 
 
 getPlayerMove :: Symbol -> Board -> IO Move
@@ -34,8 +37,8 @@ getPlayerMove symbol _ = do
 getNextMove :: Symbol -> Board -> IO Move
 getNextMove E = error "Cannot make empty move."
 -- getNextMove X = getPlayerMove X
-getNextMove X = return . getAIMove X
-getNextMove O = return . getAIMove O
+getNextMove X = getAIMove X
+getNextMove O = getAIMove O
 
 main :: IO Board
 main = play X makeEmptyBoard

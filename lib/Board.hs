@@ -32,10 +32,11 @@ showRow = intercalate "|" . map show
 makeMove :: Move -> Board -> Board
 makeMove (Move cell) (Board a) = Board $ (//) a [cell]
 
+getOpenCells :: Board -> [Cell]
+getOpenCells (Board a) = filter isEmpty $ assocs a
 
-openMoves :: Board -> [Cell]
-openMoves (Board a) = filter isEmpty $ assocs a
-
+getOpenCellNumbers :: Board -> [Int]
+getOpenCellNumbers = map fst . getOpenCells
 
 isTerminal :: Board -> Bool
-isTerminal = null . openMoves
+isTerminal = null . getOpenCells
