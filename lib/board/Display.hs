@@ -15,7 +15,7 @@ cellDelimiter = "|"
 
 
 showBoard :: [Marker] -> String
-showBoard = intercalate rowDelimiter . map showRow . groupsOf 3
+showBoard = intercalate rowDelimiter . map showRow . rows
 
 
 showRow :: [Marker] -> String

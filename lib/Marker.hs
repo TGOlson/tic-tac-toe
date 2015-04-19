@@ -4,7 +4,7 @@ import Symbol
 
 import Data.Maybe
 
-data Marker = Marker (Maybe Symbol)
+data Marker = Marker (Maybe Symbol) deriving  (Eq)
 
 
 instance Show Marker where

@@ -26,6 +26,10 @@ getCells :: Board -> [Cell]
 getCells (Board a) = assocs a
 
 
+getMarkers :: Board -> [Marker]
+getMarkers = map snd . getCells
+
+
 getCell :: Int -> Board -> Cell
 getCell i = (!! i) . getCells
 
@@ -36,3 +40,7 @@ getOpenCells = filter isEmptyCell . getCells
 
 isFull :: Board -> Bool
 isFull = null . getOpenCells
+
+
+sectionIsFull :: [Marker] -> Bool
+sectionIsFull = all (not . isEmptyMarker)

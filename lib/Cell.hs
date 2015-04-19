@@ -7,7 +7,6 @@ import Symbol
 type Cell = (Int, Marker)
 
 
-
 makeCell :: Marker -> Int -> Cell
 makeCell marker i = (i, marker)
 
