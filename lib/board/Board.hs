@@ -18,12 +18,16 @@ makeBoard :: Int -> Board
 makeBoard i = Board (array (0, i - 1) (makeEmptyCells [0..8]))
 
 
-makeMove :: Cell -> Board -> Board
-makeMove cell (Board a) = Board $ (//) a [cell]
+setCell :: Cell -> Board -> Board
+setCell cell (Board a) = Board $ (//) a [cell]
 
 
 getCells :: Board -> [Cell]
 getCells (Board a) = assocs a
+
+
+getCell :: Int -> Board -> Cell
+getCell i = (!! i) . getCells
 
 
 getOpenCells :: Board -> [Cell]

@@ -1,3 +1,30 @@
 Haskell Tic Tac Toe
 
-[WIP]
+
+```
+$ cabal run
+
+ | |
+-----
+ | |
+-----
+ | |
+
+Select a cell (1-9):
+1
+X| |
+-----
+ | |
+-----
+ | |
+
+X| |O
+-----
+ | |
+-----
+ | |
+
+Select a cell (1-9):
+...
+
+```
