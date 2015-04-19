@@ -25,22 +25,21 @@ printBoard b = do
   putStrLn ""
 
 
-getAIMove :: Symbol -> Board -> IO Cell
-getAIMove symbol b = do
-  cell <- randomElem (getOpenCells b)
-  return $ setMarker (Marker (Just symbol)) cell
+getAIMove :: Board -> IO Cell
+getAIMove b = randomElem (getOpenCells b)
 
 
-getPlayerMove :: Symbol -> Board -> IO Cell
-getPlayerMove symbol _ = do
+getPlayerMove :: Board -> IO Cell
+getPlayerMove _ = do
   coords <- getLine
-  return (read coords, Marker (Just symbol))
+  return (read coords, Marker Nothing)
 
 
 getNextMove :: Symbol -> Board -> IO Cell
--- getNextMove X = getPlayerMove X
-getNextMove X = getAIMove X
-getNextMove O = getAIMove O
+getNextMove symbol b = do
+  cell <- getAIMove b
+  return $ setCellMarkerSymbol symbol cell
+
 
 main :: IO Board
 main = play X $ makeBoard 9

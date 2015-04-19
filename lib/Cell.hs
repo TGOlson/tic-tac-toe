@@ -1,13 +1,19 @@
 module Cell where
 
 import Marker
+import Symbol
 
 
 type Cell = (Int, Marker)
 
 
+
+makeCell :: Marker -> Int -> Cell
+makeCell marker i = (i, marker)
+
+
 makeEmptyCell :: Int -> Cell
-makeEmptyCell i = (i, Marker Nothing)
+makeEmptyCell = makeCell (Marker Nothing)
 
 
 makeEmptyCells :: [Int] -> [Cell]
@@ -20,3 +26,7 @@ isEmptyCell = isEmptyMarker . snd
 
 setMarker :: Marker -> Cell -> Cell
 setMarker marker (i, _) = (i, marker)
+
+
+setCellMarkerSymbol :: Symbol -> Cell -> Cell
+setCellMarkerSymbol = setMarker . makeMarkerWithSymbol
